@@ -7,7 +7,7 @@ let spells = ['SmallFlame', 'MagicBolt', 'MagicBolt', 'SmallFlame', 'MagicBolt',
 
 it('kach kach kach', () => {
     var i;
-    for (i = 0; i < 3; i++) {
+    for (i = 0; i < 500; i++) {
         cy.wait(chance.integer({ min: 100, max: 1000 }))
 
         cy.getMonsters(sid, version, agent)
@@ -27,13 +27,13 @@ it('kach kach kach', () => {
 
                         }
                         else {
-                            cy.log('=== FATAL ERROR === the monster is not ready')
+                            cy.log('===> FATAL ERROR ===> the monster is not ready')
                             cy.wait(chance.integer({ min: 2000, max: 10000 }))
                         }
                     })
             })
 
-        //cy.wait(chance.integer({ min: 100, max: 1000 }))
-        //cy.heal(sid)
+        cy.wait(chance.integer({ min: 1000, max: 2000 }))
+        cy.heal(sid, version, agent)
     }
 })

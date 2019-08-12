@@ -99,12 +99,12 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spell, state
         body: 'uuid=' + battleId + '&type=spell&spell_id=' + spell + '&state_id=' + state
     })
         .then(response => {
-            if (response.body.result.lost == true) { cy.wait(10000); return}
+            if (response.body.result.lost == true) { cy.log('===> looser'); cy.wait(10000); return}
             else if (response.body.result.won == true) { cy.log(response.body.result); return }
             else if (response.body.result.lost == false && response.body.result.won == false)
             {
             state = response.body.state_id
-            cy.wait(500)
+            cy.wait(555)
             cy.battleSpell(sid, version, agent, battleId, spell, state)
             return
         }            
@@ -123,6 +123,17 @@ Cypress.Commands.add('battleAttack', (sid, version, agent, battleId, state) => {
         },
         body: 'uuid=' + battleId + '&type=attack&state_id=' + state
     })
+    .then(response => {
+        if (response.body.result.lost == true) { cy.log('===> looser'); cy.wait(10000); return}
+        else if (response.body.result.won == true) { cy.log(response.body.result); return }
+        else if (response.body.result.lost == false && response.body.result.won == false)
+        {
+        state = response.body.state_id
+        cy.wait(555)
+        cy.battleSpell(sid, version, agent, battleId, spell, state)
+        return
+    }            
+    })
 })
 
 Cypress.Commands.add('heal', (sid, version, agent) => {
@@ -136,5 +147,29 @@ Cypress.Commands.add('heal', (sid, version, agent) => {
             'X-ORNA-SID': sid
         },
         body: 'action=autoheal'
+    })
+})
+
+Cypress.Commands.add('getShops', (sid, version, agent) => {
+    return cy.request({
+        url: 'https://playorna.com/api/shops/?x=' + Date.now(),
+        method: 'GET',
+        headers: {
+            'User-Agent': agent,
+            'X-ORNA-VERSION': version,
+            'X-ORNA-SID': sid
+        }
+    })
+})
+
+Cypress.Commands.add('getBoss', (sid, version, agent) => {
+    return cy.request({
+        url: 'https://playorna.com/api/area/?x=' + Date.now(),
+        method: 'GET',
+        headers: {
+            'User-Agent': agent,
+            'X-ORNA-VERSION': version,
+            'X-ORNA-SID': sid
+        }
     })
 })
