@@ -1,0 +1,14 @@
+{
+  
+  "env": {
+    "humanity": 2000,
+    "login": "admin",
+    "password": "admin"
+  },
+  "defaultCommandTimeout": 30000,
+  "reporter": "mocha-allure-reporter",
+  "reporterOptions": {
+    "mochaFile": "/results/test-output.xml",
+    "toConsole": true
+  }
+}
