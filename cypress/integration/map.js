@@ -3,25 +3,34 @@ let agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKi
 let sid = 'jwa97glli6ngawphql2dw2dg4eqgtqer'
 
 it('draw the map', () => {
-let i = 0
+
+    let i = 0
     for (i = 0; i < 50000; i++) {
-        cy.getShops(sid, version, agent)
-            .then(response => {
-                response.body.result.forEach(shop => {
-                    cy.writeFile('cypress/fixtures/mapdata.csv', shop.location[0] + ',' + shop.location[1] + ',' + shop.name + shop.level +'\n', { flag: 'a+' })
+        cy.readFile('cypress/fixtures/mapdata.json').then(mapdata => {
+
+            cy.getShops(sid, version, agent)
+                .then(response => {
+                    response.body.result.forEach(shop => {
+                        let position
+                        position = mapdata.shops.indexOf(shop)
+                        cy.log(position)
+                        if (!~position) { mapdata.shops.push(shop) }
+                    })
+
                 })
-            })
 
-        cy.wait(1000)
+            cy.wait(1000)
 
-        cy.getBoss(sid, version, agent)
-            .then(response => {
-                response.body.result.forEach(boss => {
-                    cy.writeFile('cypress/fixtures/mapdata.csv', boss.location[0] + ',' + boss.location[1] + ',' + boss.name + boss.level +'\n', { flag: 'a+' })
+            cy.getBoss(sid, version, agent)
+                .then(response => {
+                    response.body.result.forEach(boss => {
+                        let position
+                        position = mapdata.shops.indexOf(boss)
+                        if (!~position) { mapdata.bosses.push(boss) }
+                    })
                 })
-            })
-
-        cy.wait(5000)
+                cy.writeFile('cypress/fixtures/mapdata.json', mapdata)
+            cy.wait(5000)
+        })
     }
-
 })
