@@ -28,6 +28,7 @@ Cypress.Commands.add('getMonsters', (sid, version, agent) => {
     return cy.request({
         url: 'https://playorna.com/api/monsters/?x=' + Date.now(),
         method: 'GET',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -41,6 +42,7 @@ Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
     cy.request({
         url: 'https://playorna.com/api/battles/monster/?x=' + date,
         method: 'OPTIONS',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -52,6 +54,7 @@ Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
     return cy.request({
         url: 'https://playorna.com/api/battles/monster/?x=' + date,
         method: 'POST',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -67,6 +70,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
     cy.request({
         url: 'https://playorna.com/api/battles/monster/?uuid=' + battleId + '&x=' + date,
         method: 'OPTIONS',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -77,6 +81,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
     return cy.request({
         url: 'https://playorna.com/api/battles/monster/?uuid=' + battleId + '&x=' + date,
         method: 'GET',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -90,6 +95,7 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
     cy.request({
         url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
         method: 'POST',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -115,6 +121,7 @@ Cypress.Commands.add('battleAttack', (sid, version, agent, battleId, state) => {
     cy.request({
         url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
         method: 'POST',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -140,6 +147,7 @@ Cypress.Commands.add('heal', (sid, version, agent) => {
     return cy.request({
         url: 'https://playorna.com/api/me/?x=' + Date.now(),
         method: 'POST',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -154,6 +162,7 @@ Cypress.Commands.add('getShops', (sid, version, agent) => {
     return cy.request({
         url: 'https://playorna.com/api/shops/?x=' + Date.now(),
         method: 'GET',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -166,6 +175,7 @@ Cypress.Commands.add('getBoss', (sid, version, agent) => {
     return cy.request({
         url: 'https://playorna.com/api/area/?x=' + Date.now(),
         method: 'GET',
+        failOnStatusCode : false,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,

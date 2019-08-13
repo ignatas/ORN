@@ -24,6 +24,7 @@ it('draw the map', () => {
     let i = 0
     for (i = 0; i < 1000; i++) {
         cy.readFile('cypress/fixtures/example.json').then(mapdata => {
+
             cy.getShops(sid, version, agent)
                 .then(response => {
                     response.body.result.forEach(shop => {
@@ -35,7 +36,7 @@ it('draw the map', () => {
                         newPoint.properties.description = shop.name + ' --lvl= ' + shop.level
                         newPoint.properties.iconCaption = newPoint.properties.description
                         newPoint.properties["marker-color"] = '#0000ff'
-
+                        
                         mapdata.features.push(newPoint)
                     })
 
@@ -54,7 +55,7 @@ it('draw the map', () => {
                         newPoint.properties.description = boss.name + ' --lvl= ' + boss.level
                         newPoint.properties.iconCaption = newPoint.properties.description
                         newPoint.properties["marker-color"] = '#ff0000'
-
+                        
                         mapdata.features.push(newPoint)
                     })
                 })

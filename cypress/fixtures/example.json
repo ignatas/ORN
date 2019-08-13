@@ -1,37 +1,6 @@
 {
   "type": "FeatureCollection",
   "features": [
-    {
-      "type": "Feature",
-      "id": "9523e44f-ea7d-4d5e-993c-f2ff0d0c46da",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          27.546957323373,
-          53.889333271363
-        ]
-      },
-      "properties": {
-        "description": "Santiago Haven Shop --lvl= 1",
-        "iconCaption": "Santiago Haven Shop --lvl= 1",
-        "marker-color": "#0000ff"
-      }
-    },
-    {
-      "type": "Feature",
-      "id": "9523e44f-ea7d-4d5e-993c-f2ff0d0c46da",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          27.546957323373,
-          53.889333271363
-        ]
-      },
-      "properties": {
-        "description": "Santiago Haven Shop --lvl= 1",
-        "iconCaption": "Santiago Haven Shop --lvl= 1",
-        "marker-color": "#0000ff"
-      }
-    }
+
   ]
 }
