@@ -86,7 +86,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
 })
 
 let state = ''
-Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spell, state) => {
+Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, state) => {
     cy.request({
         url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
         method: 'POST',
@@ -96,7 +96,7 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spell, state
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-ORNA-SID': sid
         },
-        body: 'uuid=' + battleId + '&type=spell&spell_id=' + spell + '&state_id=' + state
+        body: 'uuid=' + battleId + '&type=spell&spell_id=' + Chance().pickone(spells) + '&state_id=' + state
     })
         .then(response => {
             if (response.body.result.lost == true) { cy.log('===> looser'); cy.wait(10000); return}
@@ -105,9 +105,9 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spell, state
             {
             state = response.body.state_id
             cy.wait(555)
-            cy.battleSpell(sid, version, agent, battleId, spell, state)
+            cy.battleSpell(sid, version, agent, battleId, spells, state)
             return
-        }            
+        }
         })
 })
 
@@ -132,7 +132,7 @@ Cypress.Commands.add('battleAttack', (sid, version, agent, battleId, state) => {
         cy.wait(555)
         cy.battleSpell(sid, version, agent, battleId, spell, state)
         return
-    }            
+    }
     })
 })
 

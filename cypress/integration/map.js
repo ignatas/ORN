@@ -11,10 +11,7 @@ it('draw the map', () => {
             cy.getShops(sid, version, agent)
                 .then(response => {
                     response.body.result.forEach(shop => {
-                        let position
-                        position = mapdata.shops.indexOf(shop)
-                        cy.log(position)
-                        if (!~position) { mapdata.shops.push(shop) }
+                        if (!mapdata.shops.includes(JSON.stringify(shop))) { mapdata.shops.push(shop) }
                     })
 
                 })

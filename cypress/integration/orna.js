@@ -3,7 +3,7 @@ import Chance from 'chance'
 let version = '1.68.3'
 let agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
 let sid = 'jwa97glli6ngawphql2dw2dg4eqgtqer'
-let spells = ['SmallFlame', 'MagicBolt', 'MagicBolt', 'SmallFlame', 'MagicBolt', 'SmallFlame', 'MagicBolt']
+let spells = ['SmallFlame', 'MagicBolt', 'Drain']
 
 it('kach kach kach', () => {
     var i;
@@ -21,10 +21,7 @@ it('kach kach kach', () => {
                         if (battle.body.success == true) {
                             cy.battleInitiate(sid, version, agent, battle.body.result.uuid)
                             cy.wait(chance.integer({ min: 1000, max: 2000 }))
-                            let spell = Chance().pickone(spells)
-                            let state = ''
-                            cy.battleSpell(sid, version, agent, battle.body.result.uuid, spell, state)                           
-
+                            cy.battleSpell(sid, version, agent, battle.body.result.uuid, spells, state)
                         }
                         else {
                             cy.log('===> FATAL ERROR ===> the monster is not ready')
