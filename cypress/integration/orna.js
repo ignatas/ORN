@@ -21,6 +21,7 @@ it('kach kach kach', () => {
                         if (battle.body.success == true) {
                             cy.battleInitiate(sid, version, agent, battle.body.result.uuid)
                             cy.wait(chance.integer({ min: 1000, max: 2000 }))
+                            let state = ''
                             cy.battleSpell(sid, version, agent, battle.body.result.uuid, spells, state)
                         }
                         else {
