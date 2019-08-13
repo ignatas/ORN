@@ -7,7 +7,7 @@ let spells = ['SmallFlame', 'MagicBolt', 'Drain']
 
 it('kach kach kach', () => {
     var i;
-    for (i = 0; i < 500; i++) {
+    for (i = 0; i < 5000; i++) {
         cy.wait(chance.integer({ min: 100, max: 1000 }))
 
         cy.getMonsters(sid, version, agent)
