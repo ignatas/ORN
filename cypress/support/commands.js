@@ -29,6 +29,7 @@ Cypress.Commands.add('getMonsters', (sid, version, agent) => {
         url: 'https://playorna.com/api/monsters/?x=' + Date.now(),
         method: 'GET',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -43,6 +44,7 @@ Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
         url: 'https://playorna.com/api/battles/monster/?x=' + date,
         method: 'OPTIONS',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -55,6 +57,7 @@ Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
         url: 'https://playorna.com/api/battles/monster/?x=' + date,
         method: 'POST',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -71,6 +74,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
         url: 'https://playorna.com/api/battles/monster/?uuid=' + battleId + '&x=' + date,
         method: 'OPTIONS',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -82,6 +86,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
         url: 'https://playorna.com/api/battles/monster/?uuid=' + battleId + '&x=' + date,
         method: 'GET',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -96,6 +101,7 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
         url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
         method: 'POST',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -106,7 +112,7 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
     })
         .then(response => {
             if (response.body.result.lost == true) { cy.log('===> looser'); cy.wait(10000); return}
-            else if (response.body.result.won == true) { cy.log(response.body.result); return }
+            else if (response.body.result.won == true) { cy.log(response.body.result.gold + ' gold, and orns=' + response.body.result.orns); return }
             else if (response.body.result.lost == false && response.body.result.won == false)
             {
             state = response.body.state_id
@@ -121,7 +127,8 @@ Cypress.Commands.add('battleAttack', (sid, version, agent, battleId, state) => {
     cy.request({
         url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
         method: 'POST',
-        failOnStatusCode : false,
+        failOnStatusCode: false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -148,6 +155,7 @@ Cypress.Commands.add('heal', (sid, version, agent) => {
         url: 'https://playorna.com/api/me/?x=' + Date.now(),
         method: 'POST',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -163,6 +171,7 @@ Cypress.Commands.add('getShops', (sid, version, agent) => {
         url: 'https://playorna.com/api/shops/?x=' + Date.now(),
         method: 'GET',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
@@ -176,6 +185,7 @@ Cypress.Commands.add('getBoss', (sid, version, agent) => {
         url: 'https://playorna.com/api/area/?x=' + Date.now(),
         method: 'GET',
         failOnStatusCode : false,
+        retryOnNetworkFailure : true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
