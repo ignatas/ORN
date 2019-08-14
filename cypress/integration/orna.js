@@ -3,7 +3,7 @@ import Chance from 'chance'
 let version = '1.68.3'
 let agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
 let sid = 'jwa97glli6ngawphql2dw2dg4eqgtqer'
-let spells = ['Fulmination', 'MagicBolt', 'Drain']
+let spells = ['Fulmination', 'Fulmination', 'MagicBolt', 'Drain']
 
 it('kach kach kach', () => {
    // Cypress.Errors.onUncaughtException(false)
