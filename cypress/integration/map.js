@@ -31,6 +31,7 @@ let pointSchema = {
     }
 }
 
+describe('map builder', () => {
 Realm.open({ schema: [pointSchema] }).then(realm => {
 
     let i = 0
@@ -108,4 +109,5 @@ Realm.open({ schema: [pointSchema] }).then(realm => {
         })
         cy.wait(5000)
     }
+})
 })

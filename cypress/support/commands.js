@@ -97,6 +97,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
 
 let state = ''
 Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, state) => {
+    let spell = Chance().pickone(spells)
     cy.request({
         url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
         method: 'POST',
@@ -108,24 +109,24 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-ORNA-SID': sid
         },
-        body: 'uuid=' + battleId + '&type=spell&spell_id=' + Chance().pickone(spells) + '&state_id=' + state
+        body: 'uuid=' + battleId + '&type=spell&spell_id=' + spell + '&state_id=' + state
     })
         .then(response => {
             if (response.body.result.lost == true) {
-                cy.log('[ DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
+                cy.log('[ '+spell+' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
                 cy.log('===> looser')
-                cy.wait(10000)
+                cy.wait(chance.integer({ min: 9000, max: 11000 }))
                 return
             }
             else if (response.body.result.won == true) {
-                cy.log('[ DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
+                cy.log( '[ '+spell+' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
                 cy.log(response.body.result.gold + ' gold, and orns=' + response.body.result.orns)
                 return
             }
             else if (response.body.result.lost == false && response.body.result.won == false) {
                 state = response.body.state_id
-                cy.log('[ DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
-                cy.wait(555)
+                cy.log('[ '+spell+' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
+                cy.wait(chance.integer({ min: 555, max: 777 }))
                 cy.battleSpell(sid, version, agent, battleId, spells, state)
                 return
             }
