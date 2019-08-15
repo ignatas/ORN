@@ -1,12 +1,10 @@
 import Chance from 'chance'
+let version = Cypress.env('version')
+let agent = Cypress.env('agent')
+let sid = Cypress.env('sid')
+let spells = ['Fulmination', 'Drain']
 
-let version = '1.68.3'
-let agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
-let sid = 'jwa97glli6ngawphql2dw2dg4eqgtqer'
-let spells = ['Fulmination', 'Fulmination', 'MagicBolt', 'Drain']
-
-it('kach kach kach', () => {
-   // Cypress.Errors.onUncaughtException(false)
+it('battle # ', () => {
     var i;
     for (i = 0; i < 5000; i++) {
         cy.wait(chance.integer({ min: 100, max: 1000 }))
@@ -18,7 +16,6 @@ it('kach kach kach', () => {
 
                 cy.battleCreate(sid, version, agent, monster.uuid)
                     .then(battle => {
-                        //console.log(battle)
                         if (battle.body.success == true) {
                             cy.battleInitiate(sid, version, agent, battle.body.result.uuid)
                             cy.wait(chance.integer({ min: 1000, max: 2000 }))

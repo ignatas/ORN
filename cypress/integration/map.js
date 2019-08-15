@@ -1,6 +1,6 @@
-let version = '1.68.3'
-let agent = 'Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148'
-let sid = 'jwa97glli6ngawphql2dw2dg4eqgtqer'
+let version = Cypress.env('version')
+let agent = Cypress.env('agent')
+let sid = Cypress.env('sid')
 
 var Realm = require('realm')
 
@@ -10,76 +10,102 @@ var Realm = require('realm')
 }*/
 
 let pointSchema = {
-    "type": "Feature",
-    "id": 1234,
-    "geometry": {
-        "type": "Point",
-        "coordinates": [
-            0.0,
-            0.0
-        ]
-    },
-    "properties": {
-        "description": "shop",
-        "iconCaption": "Shop",
-        "marker-color": "#ffffff"
+    name: 'mapPoint',
+    primaryKey: 'id',
+    properties:
+    {
+        type: { type: 'string', default: "Feature" },
+        id: 'string',
+        geometry: {
+            type: { type: 'string', default: "Point" },
+            coordinates: [
+                'float',
+                'float'
+            ]
+        },
+        properties: {
+            description: 'string',
+            iconCaption: 'string',
+            [marker - color]: 'string'
+        }
     }
 }
 
-it('draw the map', () => {
-    //  Cypress.Errors.onUncaughtException(false)
-    Realm.open({ schema: [pointSchema] }).then(realm => {
+Realm.open({ schema: [pointSchema] }).then(realm => {
+
+    let i = 0
+    for (i = 0; i < 1000; i++) {
+        it('draw the map iteration', () => {
 
 
-        let i = 0
-        for (i = 0; i < 1000; i++) {
-            cy.readFile('cypress/fixtures/example.json').then(mapdata => {
+            cy.getShops(sid, version, agent)
+                .then(response => {
+                    response.body.result.forEach(shop => {
+                        /*newPoint.type = 'Feature'
+                        newPoint.id = shop.uuid
+                        newPoint.geometry.type = 'Point'
+                        newPoint.geometry.coordinates[0] = shop.location[1]
+                        newPoint.geometry.coordinates[1] = shop.location[0]
+                        newPoint.properties.description = shop.name + ' --lvl= ' + shop.level
+                        newPoint.properties.iconCaption = newPoint.properties.description
+                        newPoint.properties["marker-color"] = '#0000ff'
 
-                cy.getShops(sid, version, agent)
-                    .then(response => {
-                        response.body.result.forEach(shop => {
-                            /*newPoint.type = 'Feature'
-                            newPoint.id = shop.uuid
-                            newPoint.geometry.type = 'Point'
-                            newPoint.geometry.coordinates[0] = shop.location[1]
-                            newPoint.geometry.coordinates[1] = shop.location[0]
-                            newPoint.properties.description = shop.name + ' --lvl= ' + shop.level
-                            newPoint.properties.iconCaption = newPoint.properties.description
-                            newPoint.properties["marker-color"] = '#0000ff'
-
-                            mapdata.features.push(newPoint)*/
-                            try {
-                                realm.write(() => {
-                                  realm.create('Car', {make: 'Honda', model: 'Accord', drive: 'awd'});
-                                });
-                              } catch (e) {
-                                console.log("Error on creation");
-                              }
-                            
-                        })
-
+                        mapdata.features.push(newPoint)*/
+                        try {
+                            realm.write(() => {
+                                realm.create('mapPoint', {
+                                    type: 'Feature',
+                                    id: shop.uuid,
+                                    geometry: {
+                                        type: 'Point',
+                                        coordinates: [
+                                            shop.location[1],
+                                            shop.location[0]
+                                        ]
+                                    },
+                                    properties: {
+                                        description: shop.name + ' --lvl=' + shop.level,
+                                        iconCaption: 'Shop',
+                                        [marker - color]: '#0000ff'
+                                    }
+                                })
+                            })
+                        } catch (e) {
+                            console.log("Error on creation")
+                        }
                     })
+                })
 
-                cy.wait(1000)
+            cy.wait(1000)
 
-                cy.getBoss(sid, version, agent)
-                    .then(response => {
-                        response.body.result.forEach(boss => {
-                            newPoint.type = 'Feature'
-                            newPoint.id = boss.uuid
-                            newPoint.geometry.type = 'Point'
-                            newPoint.geometry.coordinates[0] = boss.location[1]
-                            newPoint.geometry.coordinates[1] = boss.location[0]
-                            newPoint.properties.description = boss.name + ' --lvl= ' + boss.level
-                            newPoint.properties.iconCaption = newPoint.properties.description
-                            newPoint.properties["marker-color"] = '#ff0000'
-
-                            mapdata.features.push(newPoint)
-                        })
+            cy.getBoss(sid, version, agent)
+                .then(response => {
+                    response.body.result.forEach(boss => {
+                        try {
+                            realm.write(() => {
+                                realm.create('mapPoint', {
+                                    type: 'Feature',
+                                    id: boss.uuid,
+                                    geometry: {
+                                        type: 'Point',
+                                        coordinates: [
+                                            boss.location[1],
+                                            boss.location[0]
+                                        ]
+                                    },
+                                    properties: {
+                                        description: boss.name + ' --lvl=' + boss.level,
+                                        iconCaption: 'Boss',
+                                        [marker - color]: '#ff0000'
+                                    }
+                                })
+                            })
+                        } catch (e) {
+                            console.log("Error on creation");
+                        }
                     })
-                cy.writeFile('cypress/fixtures/example.json', mapdata)
-                cy.wait(5000)
-            })
-        }
-    })
+                })
+        })
+        cy.wait(5000)
+    }
 })
