@@ -32,8 +32,8 @@ let pointSchema = {
 describe('map builder', () => {
 
     let i = 0
-    for (i = 0; i < 10; i++) {
-        it('draw the map iteration', () => {
+    for (i = 0; i < 1000; i++) {
+        it('draw the map iteration #'+i, () => {
             cy.getShops(sid, version, agent)
                 .then(response => {
                     cy.readFile('cypress/fixtures/shops.csv').then(points => {
