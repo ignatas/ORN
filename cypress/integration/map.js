@@ -63,5 +63,21 @@ describe('map builder', () => {
         })
         // cy.wait(5000)
     }
-
 })
+
+/*
+POST https://playorna.com/api/chest/?x=1566160279677 HTTP/1.1
+Host: playorna.com
+Content-Type: application/x-www-form-urlencoded
+Origin: null
+Accept-Encoding: br, gzip, deflate
+Connection: keep-alive
+X-ORNA-SID: jwa97glli6ngawphql2dw2dg4eqgtqer
+Accept: application/json, text/plain, 
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 12_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148
+Content-Length: 41
+Cache-Control: no-cache
+Accept-Language: ru
+
+uuid=2aa7c464-8808-4886-b589-fb491cdc2921
+*/
