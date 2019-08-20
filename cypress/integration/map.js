@@ -32,7 +32,7 @@ let pointSchema = {
 describe('map builder', () => {
 
     let i = 0
-    for (i = 0; i < 1000; i++) {
+    for (i = 0; i < 350; i++) {
         it('draw the map iteration #'+i, () => {
             cy.getShops(sid, version, agent)
                 .then(response => {
