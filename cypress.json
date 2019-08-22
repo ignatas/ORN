@@ -9,7 +9,7 @@
     "sid": "jwa97glli6ngawphql2dw2dg4eqgtqer"
   },
   "defaultCommandTimeout": 50000,
-  "responseTimeout": 90000,
+  "responseTimeout": 60000,
   "reporter": "mocha-allure-reporter",
   "reporterOptions": {
     "mochaFile": "/results/test-output.xml",
