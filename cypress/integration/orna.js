@@ -19,7 +19,11 @@ for (i = 0; i < 1000; i++) {
 
                     cy.battleCreate(sid, version, agent, monster.uuid)
                         .then(battle => {
-                            if (battle.status >= 400) { cy.log('ERROR=' + battle.status) }
+                            if (battle.status >= 400) {
+                                cy.log('ERROR=' + battle.status)
+                                cy.wait(chance.integer({ min: 2000, max: 10000 }))
+                                expect(battle.status).to.equal(200)
+                            }
                             else {
                                 if (battle.body.success == true) {
                                     cy.battleInitiate(sid, version, agent, battle.body.result.uuid)
