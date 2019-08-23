@@ -8,7 +8,7 @@ let spells = ['Fulmination', 'SummonDead', 'MagicCuts', 'MultiFlame', 'MultiFros
 var i;
 for (i = 0; i < 1000; i++) {
     it('battle # ' + i, () => {
-        cy.wait(chance.integer({ min: 100, max: 500 }))
+        cy.wait(chance.integer({ min: 1000, max: 1500 }))
 
         cy.getMonsters(sid, version, agent)
             .then(monsters => {
@@ -35,10 +35,11 @@ for (i = 0; i < 1000; i++) {
                         })
 
                 }
+                cy.wait(chance.integer({ min: 1000, max: 2000 }))
+                cy.heal(sid, version, agent)
             })
 
-        cy.wait(chance.integer({ min: 1000, max: 2000 }))
-        cy.heal(sid, version, agent)
-        cy.wait(chance.integer({ min: 100, max: 200 }))
+
+        cy.wait(chance.integer({ min: 500, max: 700 }))
     })
 }
