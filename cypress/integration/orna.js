@@ -30,6 +30,7 @@ for (i = 0; i < 1000; i++) {
                                 else {
                                     cy.log('===> FATAL ERROR ===> the monster is not ready')
                                     cy.wait(chance.integer({ min: 2000, max: 10000 }))
+                                    expect(battle.body.success).to.equal(true)
                                 }
                             }
                         })
