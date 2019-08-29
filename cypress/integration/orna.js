@@ -6,16 +6,18 @@ let spells = ['Fulmination', 'Fulmination', 'SummonDead', 'SummonDead', 'MagicCu
 
 
 var i;
-for (i = 0; i < 1000; i++) {
+for (i = 0; i < 500; i++) {
     it('battle # ' + i, () => {
-        cy.wait(chance.integer({ min: 1000, max: 1500 }))
+        cy.wait(chance.integer({ min: 4000, max: 4500 }))
 
         cy.getMonsters(sid, version, agent)
             .then(monsters => {
-                if (monsters.status >= 400) { cy.log('ERROR=' + monsters.status) }
-                else {
-                    let monster = Chance().pickone(monsters.body.result.filter(monster => (monster.current_hp <= 5000)))
+                monsters.body.result.forEach(monster => {
+                    //let monster = Chance().pickone(monsters.body.result.filter(monster => (monster.current_hp <= 2500)))
                     cy.log(monster.name + ' -- hp=' + monster.hp)
+
+                    cy.heal(sid, version, agent)
+                    cy.wait(chance.integer({ min: 1000, max: 2000 }))
 
                     cy.battleCreate(sid, version, agent, monster.uuid)
                         .then(battle => {
@@ -34,14 +36,13 @@ for (i = 0; i < 1000; i++) {
                                 else {
                                     cy.log('===> FATAL ERROR ===> the monster is not ready')
                                     cy.wait(chance.integer({ min: 2000, max: 10000 }))
-                                    expect(battle.body.success).to.equal(true)
+                                    //expect(battle.body.success).to.equal(true)
                                 }
                             }
                         })
 
-                }
-                cy.wait(chance.integer({ min: 1000, max: 2000 }))
-                cy.heal(sid, version, agent)
+                    })
+
             })
 
 
