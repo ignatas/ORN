@@ -13,9 +13,10 @@ for (i = 0; i < 500; i++) {
         cy.getMonsters(sid, version, agent)
             .then(monsters => {
                 monsters.body.result.forEach(monster => {
+                    cy.log('___________________________________________')
                     cy.wait(chance.integer({ min: 500, max: 700 }))
                     //let monster = Chance().pickone(monsters.body.result.filter(monster => (monster.current_hp <= 2500)))
-                    cy.log('[NEW MONSTER =](htttp://e.com)'monster.name + ' -- hp=' + monster.hp)
+                    cy.log('[NEW MONSTER =](htttp://e.com)' + monster.name + ' -- hp=' + monster.hp)
 
                     cy.heal(sid, version, agent)
                     cy.wait(chance.integer({ min: 1000, max: 2000 }))
