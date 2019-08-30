@@ -117,13 +117,13 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
             else {
                 if (response.body.result.lost == true) {
                     cy.log('[ ' + spell + ' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
-                    cy.log('===> looser')
+                    cy.log('[===> looser](htttp://e.com)')
                     cy.wait(chance.integer({ min: 9000, max: 11000 }))
                     return
                 }
                 else if (response.body.result.won == true) {
                     cy.log('[ ' + spell + ' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
-                    cy.log(response.body.result.gold + ' gold, and orns=' + response.body.result.orns)
+                    cy.log(response.body.result.gold + '[ gold, and orns=](htttp://e.com)' + response.body.result.orns)
                     return
                 }
                 else if (response.body.result.lost == false && response.body.result.won == false) {
