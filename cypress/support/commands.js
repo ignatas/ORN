@@ -35,7 +35,7 @@ Cypress.Commands.add('getMonsters', (sid, version, agent) => {
             'X-ORNA-VERSION': version,
             'X-ORNA-SID': sid
         }
-    }).then(response => {expect(response.status).to.eq(200)})
+    }).then(response => { expect(response.status).to.eq(200) })
 })
 
 Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
@@ -51,7 +51,7 @@ Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-ORNA-SID': sid
         }
-    }).then(response => {expect(response.status).to.eq(204)})
+    }).then(response => { expect(response.status).to.eq(204) })
     // the main request for battle creation
     return cy.request({
         url: 'https://playorna.com/api/battles/monster/?x=' + date,
@@ -65,7 +65,7 @@ Cypress.Commands.add('battleCreate', (sid, version, agent, monsterId) => {
             'X-ORNA-SID': sid
         },
         body: 'uuid=' + monsterId
-    }).then(response => {expect(response.status).to.eq(200)})
+    }).then(response => { expect(response.status).to.eq(200) })
 })
 
 Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
@@ -80,7 +80,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
             'X-ORNA-VERSION': version,
             'X-ORNA-SID': sid
         }
-    }).then(response => {expect(response.status).to.eq(204)})
+    }).then(response => { expect(response.status).to.eq(204) })
     // the main request for battle initioation, preconditions
     return cy.request({
         url: 'https://playorna.com/api/battles/monster/?uuid=' + battleId + '&x=' + date,
@@ -92,7 +92,7 @@ Cypress.Commands.add('battleInitiate', (sid, version, agent, battleId) => {
             'X-ORNA-VERSION': version,
             'X-ORNA-SID': sid
         }
-    }).then(response => {expect(response.status).to.eq(200)})
+    }).then(response => { expect(response.status).to.eq(200) })
 })
 
 let state = ''
@@ -118,7 +118,8 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
                 if (response.body.result.lost == true) {
                     cy.log('[ ' + spell + ' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
                     cy.log('[===> looser](htttp://e.com)')
-                    cy.wait(chance.integer({ min: 9000, max: 11000 }))
+                    console.log('battle lost')
+                    cy.wait(chance.integer({ min: 2000, max: 3000 }))
                     return
                 }
                 else if (response.body.result.won == true) {
@@ -177,7 +178,7 @@ Cypress.Commands.add('heal', (sid, version, agent) => {
             'X-ORNA-SID': sid
         },
         body: 'action=autoheal'
-    }).then(response => {expect(response.status).to.eq(200)})
+    }).then(response => { expect(response.status).to.eq(200) })
 })
 
 Cypress.Commands.add('getShops', (sid, version, agent) => {
@@ -191,7 +192,7 @@ Cypress.Commands.add('getShops', (sid, version, agent) => {
             'X-ORNA-VERSION': version,
             'X-ORNA-SID': sid
         }
-    }).then(response => {expect(response.status).to.eq(200)})
+    }).then(response => { expect(response.status).to.eq(200) })
 })
 
 Cypress.Commands.add('getBoss', (sid, version, agent) => {
@@ -205,5 +206,5 @@ Cypress.Commands.add('getBoss', (sid, version, agent) => {
             'X-ORNA-VERSION': version,
             'X-ORNA-SID': sid
         }
-    }).then(response => {expect(response.status).to.eq(200)})
+    }).then(response => { expect(response.status).to.eq(200) })
 })

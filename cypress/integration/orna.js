@@ -2,19 +2,19 @@ import Chance from 'chance'
 let version = Cypress.env('version')
 let agent = Cypress.env('agent')
 let sid = Cypress.env('sid')
-let spells = ['Fulmination', 'Fulmination', 'SummonDead', 'SummonDead', 'MagicCuts', 'MultiFlame', 'MultiFrost']
+let spells = ['Fulmination', 'Fulmination', 'SummonDead', 'SummonDead', 'MultiFlame', 'MultiFrost']
 
 
 var i;
-for (i = 0; i < 500; i++) {
+for (i = 0; i < 100; i++) {
     it('battle # ' + i, () => {
-        cy.wait(chance.integer({ min: 4000, max: 4500 }))
+        cy.wait(chance.integer({ min: 2000, max: 2500 }))
 
         cy.getMonsters(sid, version, agent)
             .then(monsters => {
                 monsters.body.result.forEach(monster => {
                     cy.log('___________________________________________')
-                    cy.wait(chance.integer({ min: 500, max: 700 }))
+                    cy.wait(chance.integer({ min: 1100, max: 1500 }))
                     //let monster = Chance().pickone(monsters.body.result.filter(monster => (monster.current_hp <= 2500)))
                     cy.log('[NEW MONSTER =](htttp://e.com)' + monster.name + ' -- hp=' + monster.hp)
 
