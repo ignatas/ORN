@@ -2,7 +2,12 @@ import Chance from 'chance'
 let version = Cypress.env('version')
 let agent = Cypress.env('agent')
 let sid = Cypress.env('sid')
-let spells = ['Fulmination', 'Fulmination', 'SummonDead', 'SummonDead', 'MultiFlame']
+let spells = [
+    'Fulmination', 'Fulmination', 'Fulmination',
+    'SummonDead', 'SummonDead', 
+    'MultiFlame',
+    'DrainIII', 'DrainIII'
+]
 
 
 var i;

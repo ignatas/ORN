@@ -138,32 +138,73 @@ Cypress.Commands.add('battleSpell', (sid, version, agent, battleId, spells, stat
         })
 })
 
-Cypress.Commands.add('battleAttack', (sid, version, agent, battleId, state) => {
+let raidstate = ''
+let dd = Cypress.env('raidBattle') + '&type=spell&spell_id=SummonDead&state_id='
+let healAll = Cypress.env('raidBattle') + '&type=item&item_uuid=fe151a51-9ea3-4f36-85c0-1e7347d7bd29&item_id=292ddeaa-8b22-4753-8c0f-2f2dc6ff8daf&grouped=true&state_id='
+
+Cypress.Commands.add('raid', (sid, version, agent, bodystate, raidstate) => {
+
     cy.request({
-        url: 'https://playorna.com/api/battles/monster/turn/?x=' + Date.now(),
+        url: 'https://playorna.com/api/battles/raid/turn/?x=' + Date.now(),
+        method: 'OPTIONS',
+        failOnStatusCode: false,
+        headers: {
+            'User-Agent': agent,
+            'X-ORNA-VERSION': version,
+            'X-ORNA-SID': sid
+        }
+    }).then(response => { expect(response.status).to.eq(204) })
+
+    cy.request({
+        url: 'https://playorna.com/api/battles/raid/turn/?x=' + Date.now(),
         method: 'POST',
         failOnStatusCode: false,
-        retryOnNetworkFailure: true,
         headers: {
             'User-Agent': agent,
             'X-ORNA-VERSION': version,
             'Content-Type': 'application/x-www-form-urlencoded',
             'X-ORNA-SID': sid
         },
-        body: 'uuid=' + battleId + '&type=attack&state_id=' + state
+        body: bodystate + raidstate
     })
         .then(response => {
             expect(response.status).to.eq(200)
-            if (response.body.result.lost == true) { cy.log('===> looser'); cy.wait(10000); return }
-            else if (response.body.result.won == true) { cy.log(response.body.result); return }
-            else if (response.body.result.lost == false && response.body.result.won == false) {
-                state = response.body.state_id
-                cy.wait(555)
-                cy.battleSpell(sid, version, agent, battleId, spell, state)
-                return
+            if (response.status >= 400) { cy.log('ERROR=' + response.status) }
+            else {
+                if (response.body.result.lost == true) {
+                    //cy.log('[ ' + spell + ' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
+                    cy.log('[===> looser](htttp://e.com)')
+                    //console.log('battle lost')
+                    //cy.wait(chance.integer({ min: 2000, max: 3000 }))
+                    return
+                }
+
+                else if (response.body.result.won == true) {
+                    //cy.log('[ ' + spell + ' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
+                    //cy.log(response.body.result.gold + '[ gold, and orns=](htttp://e.com)' + response.body.result.orns)
+                    cy.log('[===> winner](htttp://e.com)')
+                    return
+                }
+                else if (response.body.result.lost == false && response.body.result.won == false) {
+                    raidstate = response.body.state_id
+                    cy.log(' DAMAGE= ' + response.body.damage + ' ] - [ HP=' + response.body.player_hp + ' MANA=' + response.body.player_mana + ' ] - [ monster=' + response.body.monster_hp + ' ]')
+
+                    if (response.body.player_mana <= 100 || response.body.player_hp <= 1000) {
+                        cy.wait(chance.integer({ min: 1500, max: 3000 }))
+                        cy.raid(sid, version, agent, healAll, raidstate)
+                        cy.wait(chance.integer({ min: 1000, max: 2000 }))
+                        return
+
+                    } else {
+                        cy.wait(chance.integer({ min: 1300, max: 1600 }))
+                        cy.raid(sid, version, agent, dd, raidstate)
+                        return
+                    }
+                }
             }
         })
 })
+
 
 Cypress.Commands.add('heal', (sid, version, agent) => {
     return cy.request({
