@@ -4,3 +4,4 @@ cypress/videos/
 cypress/fixtures/response.json
 allure-results/
 debug.log
+cypress.json
