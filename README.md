@@ -1,8 +1,11 @@
 ## DISCLAIMER
-The code was made just for fun and I'm not responsible for if usage (or any parts)
-All what you do - you do it at own risk
-May cause ban (as minimum)
-If you have no idea how to do something then better don't
+!!! The code was made just for fun and I'm not responsible for if usage (or any parts) !!!
+
+!!! All what you do - you do it at own risk !!!
+
+!!! May cause ban (as minimum) !!!
+
+!!! If you have no idea how to do something then better don't !!!
 
 ## Preparations
 This project was created using nodejs version 10.15.3.
