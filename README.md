@@ -18,7 +18,7 @@ Navigate to the directory with downloaded files and install all required depende
 npm install
 ```
 add ./cypress.json file manually
-
+```
 {
   "env": {
     "version": "client side version number",
@@ -34,7 +34,7 @@ add ./cypress.json file manually
     "toConsole": true
   }
 }
-
+```
 Fiddler/Charlies can be used to get that info from original request
 
 ## Start
@@ -44,11 +44,12 @@ To run scripts launch cypress using:
 npx cypress run
 ```
 Then just select the necessary bot-program
-- map : saves Shop (any building)
+- map : saves Shop (any building) and Boss of your current location (needs travelling)
 - orna : kills monsters around you
 - bosskiller : kills the raid boss
 
 # Note
 
 Works with orna server up to 1.70
+
 You should change the scope of spells that suites your character and get a lot of HP/MP poitons
